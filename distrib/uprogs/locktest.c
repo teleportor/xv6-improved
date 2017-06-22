@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 // **************************************************
 // This block is used to allocate system resources.
 // **************************************************
-    usersem sem = semaphore_create(1);
+    userlock lk = lock_create();
 // **************************************************
 // Block end.
 // **************************************************
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 // **************************************************
 // This block is used to free system resources.
 // **************************************************
-        semaphore_free(sem);
+        lock_free(lk);
 // **************************************************
 // Block end.
 // **************************************************
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 // This block is the code of chlid threads.
 // **************************************************
         if (uselock)
-            semaphore_acquire(sem);
+            lock_acquire(lk);
 
         int t = count;
         sleep(20);
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
         printf(1, "child %d: count = %d, %x\n", index, count);
 
         if (uselock)
-            semaphore_release(sem);
+            lock_release(lk);
 // **************************************************
 // Block end.
 // **************************************************
